@@ -2,6 +2,7 @@
 .htaccess
 .htpasswd
 !cfg/.htaccess
+cfg/*
 
 # Ignore data/
 /data/
