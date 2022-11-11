@@ -1,10 +1,15 @@
 # PrivateBin version history
 
   * **1.4.1 (not yet released)**
-    * ADDED: Translations for Turkish
+    * ADDED: script for data storage backend migrations (#1012)
+    * ADDED: Translations for Turkish, Slovak, Greek and Thai
+    * ADDED: S3 Storage backend (#994)
+    * ADDED: Jdenticons as an option for comment icons (#793)
     * CHANGED: Avoid `SUPER` privilege for setting the `sql_mode` for MariaDB/MySQL (#919)
+    * CHANGED: Upgrading libraries to: zlib 1.2.13
     * FIXED: Revert to CREATE INDEX without IF NOT EXISTS clauses, to support MySQL (#943)
     * FIXED: Apply table prefix to indexes as well, to support multiple instances sharing a single database (#943)
+    * FIXED: YOURLS integration via new proxy, storing signature in configuration (#725)
   * **1.4 (2022-04-09)**
     * ADDED: Translations for Corsican, Estonian, Finnish and Lojban
     * ADDED: new HTTP headers improving security (#765)

@@ -29,6 +29,9 @@
 * rodehoed - option to exempt ips from the rate-limiter
 * Mark van Holsteijn - Google Cloud Storage backend
 * Austin Huang - Oracle database support
+* Felix J. Ogris - S3 Storage backend
+* Mounir Idrassi & J. Mozdzen - secure YOURLS integration
+* Felix J. Ogris - script for data backend migrations, dropped singleton behaviour of data backends
 
 ## Translations
 * Hexalyse - French
@@ -57,3 +60,6 @@
 * Patriccollu di Santa Maria è Sichè - Corsican
 * Markus Mikkonen - Finnish
 * Emir Ensar Rahmanlar - Turkish
+* Stevo984 - Slovak
+* Christos Karamolegkos - Greek
+* jaideejung007 - Thai

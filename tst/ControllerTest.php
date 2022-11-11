@@ -16,7 +16,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
     {
         /* Setup Routine */
         $this->_path  = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'privatebin_data';
-        $this->_data  = Filesystem::getInstance(array('dir' => $this->_path));
+        $this->_data  = new Filesystem(array('dir' => $this->_path));
         ServerSalt::setStore($this->_data);
         TrafficLimiter::setStore($this->_data);
         $this->reset();
@@ -48,6 +48,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
      */
     public function testView()
     {
+        $_SERVER['HTTP_HOST']             = 'example.com';
         $_SERVER['QUERY_STRING']          = Helper::getPasteId();
         $_GET[Helper::getPasteId()]       = '';
         ob_start();
@@ -63,6 +64,11 @@ class ControllerTest extends PHPUnit_Framework_TestCase
             'id="shortenbutton"',
             $content,
             'doesn\'t output shortener button'
+        );
+        $this->assertRegExp(
+            '# href="https://' . preg_quote($_SERVER['HTTP_HOST']) . '/">switching to HTTPS#',
+            $content,
+            'outputs configured https URL correctly'
         );
     }
 

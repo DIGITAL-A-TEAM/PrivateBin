@@ -26,7 +26,7 @@ install and configure PrivateBin on your server. It's available on
     - `open_basedir` access to `/dev/urandom`
     - mcrypt extension AND `open_basedir` access to `/dev/urandom`
     - com_dotnet extension
-- GD extension
+- GD extension (when using identicon or vizhash icons, jdenticon works without it)
 - zlib extension
 - some disk space or a database supported by [PDO](https://php.net/manual/book.pdo.php)
 - ability to create files and folders in the installation directory and the PATH
@@ -38,10 +38,10 @@ install and configure PrivateBin on your server. It's available on
 ### Changing the Path
 
 In the index.php you can define a different `PATH`. This is useful to secure
-your installation. You can move the configuration, data files, templates and PHP
-libraries (directories cfg, doc, data, lib, tpl, tst and vendor) outside of your
-document root. This new location must still be accessible to your webserver and
-PHP process (see also
+your installation. You can move the utilities, configuration, data files,
+templates and PHP libraries (directories bin, cfg, doc, data, lib, tpl, tst and
+vendor) outside of your document root. This new location must still be
+accessible to your webserver and PHP process (see also
 [open_basedir setting](https://secure.php.net/manual/en/ini.core.php#ini.open-basedir)).
 
 > #### PATH Example
@@ -232,3 +232,42 @@ Platform using Google Cloud Run is easy and cheap.
 
 To use the Google Cloud Storage backend you have to install the suggested
 library using the command `composer require google/cloud-storage`.
+
+#### Using S3 Storage
+Similar to Google Cloud Storage, you can choose S3 as storage backend. It uses
+the AWS SDK for PHP, but can also talk to a Rados gateway as part of a CEPH
+cluster. To use this backend, you first have to install the SDK in the
+document root of PrivateBin: `composer require aws/aws-sdk-php`. You have to
+create the S3 bucket on the CEPH cluster before using the S3 backend.
+
+In the `[model]` section of cfg/conf.php, set `class` to `S3Storage`.
+
+You can set any combination of the following options in the `[model_options]`
+section:
+
+  * region
+  * version
+  * endpoint
+  * bucket
+  * prefix
+  * accesskey
+  * secretkey
+  * use_path_style_endpoint
+
+By default, prefix is empty. If set, the S3 backend will place all PrivateBin
+data beneath this prefix.
+
+For AWS, you have to provide at least `region`, `bucket`, `accesskey`, and
+`secretkey`.
+
+For CEPH, follow this example:
+
+```
+region = ""
+version = "2006-03-01"
+endpoint = "https://s3.my-ceph.invalid"
+use_path_style_endpoint = true
+bucket = "my-bucket"
+accesskey = "my-rados-user"
+secretkey = "my-rados-pass"
+```
