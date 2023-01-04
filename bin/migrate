@@ -1,7 +1,8 @@
+#!/usr/bin/env php
 <?php
 
 // change this, if your php files and data is outside of your webservers document root
-define('PATH', '..' . DIRECTORY_SEPARATOR);
+define('PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 
 define('PUBLIC_PATH', __DIR__ . DIRECTORY_SEPARATOR);
 require PATH . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
@@ -9,16 +10,21 @@ require PATH . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 use PrivateBin\Configuration;
 use PrivateBin\Model;
 
+// third argument in getopt requires PHP >= 7.1
+if (version_compare(PHP_VERSION, '7.1.0') < 0) {
+    dieerr('migrate requires php 7.1 or above to work. Sorry.');
+}
 
 $longopts = array(
     "delete-after",
-    "delete-during"
+    "delete-during",
+    "help"
 );
 $opts_arr = getopt("fhnv", $longopts, $rest);
 if ($opts_arr === false) {
-    dieerr("Erroneous command line options. Please use -h");
+    dieerr("Erroneous command line options. Please use --help");
 }
-if (array_key_exists("h", $opts_arr)) {
+if (array_key_exists("h", $opts_arr) || array_key_exists("help", $opts_arr)) {
     helpexit();
 }
 
@@ -168,12 +174,12 @@ function debug ($text) {
 
 function helpexit ()
 {
-    print("migrate.php - Copy data between PrivateBin backends
+    print("migrate - Copy data between PrivateBin backends
 
 Usage:
-  php migrate.php [--delete-after] [--delete-during] [-f] [-n] [-v] srcconfdir
-                  [<dstconfdir>]
-  php migrate.php [-h]
+  migrate [--delete-after] [--delete-during] [-f] [-n] [-v] srcconfdir
+          [<dstconfdir>]
+  migrate [-h|--help]
 
 Options:
   --delete-after   delete data from source after all pastes and comments have
@@ -182,6 +188,7 @@ Options:
                    comments have successfully been copied to the destination
   -f               forcefully overwrite data which already exists at the
                    destination
+  -h, --help       displays this help message
   -n               dry run, do not copy data
   -v               be verbose
   <srcconfdir>     use storage backend configration from conf.php found in

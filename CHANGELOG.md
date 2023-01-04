@@ -1,12 +1,17 @@
 # PrivateBin version history
 
-  * **1.4.1 (not yet released)**
+  * **1.5.1 (2022-12-24)**
+    * ADDED: script for administrative tasks: deleting pastes (#274), removing empty directories (#277), purging expired pastes (#276) & statistics (#319)
+    * FIXED: Revert Filesystem purge to limited and randomized lookup (#1030)
+    * FIXED: Catch JSON decode errors when invalid data gets sent to the API (#1030)
+    * FIXED: Support sorting v1 format in mixed version comments in Filesystem backend (#1030)
+  * **1.5 (2022-12-11)**
     * ADDED: script for data storage backend migrations (#1012)
     * ADDED: Translations for Turkish, Slovak, Greek and Thai
     * ADDED: S3 Storage backend (#994)
     * ADDED: Jdenticons as an option for comment icons (#793)
     * CHANGED: Avoid `SUPER` privilege for setting the `sql_mode` for MariaDB/MySQL (#919)
-    * CHANGED: Upgrading libraries to: zlib 1.2.13
+    * CHANGED: Upgrading libraries to: DOMpurify 2.4.6, jQuery 3.6.1, Showdown 2.1.0 & zlib 1.2.13
     * FIXED: Revert to CREATE INDEX without IF NOT EXISTS clauses, to support MySQL (#943)
     * FIXED: Apply table prefix to indexes as well, to support multiple instances sharing a single database (#943)
     * FIXED: YOURLS integration via new proxy, storing signature in configuration (#725)
