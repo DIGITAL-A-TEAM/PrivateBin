@@ -1,18 +1,23 @@
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 name: Deployment
 jobs:
-  web-deploy:
-    name: 🚀 Deploy
-    runs-on: ubuntu-latest
-    steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v3
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@3.1.1
-      with:
-        ftp-server: ${{ secrets.FTP_SERVER }}
-        ftp-username: ${{ secrets.FTP_USERNAME }}
-        ftp-password: ${{ secrets.FTP_PASSWORD }}
+    web-deploy:
+        name: Deployment
+        runs-on: ubuntu-latest
+        steps:
+            - name: 🚚 Get latest code
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 2
+            - name: 📂 Sync files
+              uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+              with:
+                  server: ${{ secrets.NETCUP_SERVER }}
+                  username: ${{ secrets.NETCUP_USER }}
+                  password: ${{ secrets.NETCUP_PASSWORD }}
+                  local-dir: 
+                  server-dir: /digital-ateam.de/note/
+                  port: 21
